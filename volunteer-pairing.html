@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>柳韵数兴突击队 - 实践网</title>
+    <link rel="icon" type="image/x-icon" href="images/icon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loader.css">
+    <style>
+        /* 页面特定样式 */
+        .page-header {
+            position: relative;
+            height: 350px;
+            margin-top: 72px;
+            background: url('images/banner2.jpg') center/cover no-repeat;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(22, 101, 52, 0.5);
+        }
+
+        .header-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .header-content h1 {
+            font-family: 'SimSun', 'STSong', serif;
+            font-size: 2.8rem;
+            font-weight: bold;
+            letter-spacing: 6px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content p {
+            font-size: 1.2rem;
+            margin-top: 15px;
+            letter-spacing: 3px;
+            opacity: 0.95;
+        }
+
+        /* 面包屑导航 */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #003264;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #0066cc;
+        }
+
+        /* 文章主体 */
+        .article-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .article-header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #166534;
+            margin-bottom: 30px;
+        }
+
+        .article-header h1 {
+            font-size: 1.8rem;
+            color: #166534;
+            margin-bottom: 15px;
+        }
+
+        .article-meta {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .article-meta span {
+            margin: 0 15px;
+        }
+
+        .article-content {
+            line-height: 2;
+            color: #333;
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+            text-indent: 2em;
+        }
+
+        .article-content h2 {
+            font-size: 1.3rem;
+            color: #166534;
+            margin: 30px 0 15px;
+            padding-left: 10px;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 25px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-content .img-caption {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
+
+        .article-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .article-footer p {
+            margin: 5px 0;
+            text-indent: 0;
+        }
+
+        /* 团队成员展示 */
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .member-card {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #166534, #22c55e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .member-card h4 {
+            color: #166534;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .member-card p {
+            color: #666;
+            font-size: 0.85rem;
+            text-indent: 0;
+            margin: 0;
+        }
+
+        /* 数据统计 */
+        .stats-box {
+            background: linear-gradient(135deg, #166534, #14532d);
+            padding: 40px;
+            border-radius: 8px;
+            margin: 30px 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                height: 250px;
+            }
+
+            .header-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .team-members {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-box {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 25px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 加载动画 -->
+    <div class="loader-wrapper">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <img src="images/logo.png" alt="广州应用科技学院计算机学院">
+            </div>
+            <div class="loader-progress">
+                <div class="loader-progress-bar"></div>
+            </div>
+            <p class="loader-text">正在加载...</p>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html"><img src="images/logo.png" alt="广州应用科技学院计算机学院"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="rural-education.html">乡村支教</a></li>
+                <li><a href="pairing-help.html">结对帮扶</a></li>
+                <li><a href="sports.html">十五运会</a></li>
+                <li class="has-dropdown active">
+                    <a href="#">志愿者队伍</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="volunteer-rural.html">科教先锋实践队</a></li>
+                        <li><a href="volunteer-pairing.html">柳韵数兴突击队</a></li>
+                        <li><a href="volunteer-sports.html">十五运会小海豚</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html#contact">联系我们</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="搜索..." class="search-input">
+                <button id="searchBtn" class="search-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面头部 -->
+    <header class="page-header">
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <h1>柳韵数兴突击队</h1>
+            <p>科技赋能 · 智助乡村</p>
+        </div>
+    </header>
+
+    <!-- 面包屑导航 -->
+    <div class="breadcrumb">
+        当前位置：<a href="index.html">首页</a> &gt; <a href="#">志愿者队伍</a> &gt; 柳韵数兴突击队
+    </div>
+
+    <!-- 文章主体 -->
+    <main style="max-width: 1200px; margin: 0 auto 50px; padding: 0 30px;">
+        <article class="article-container">
+            <div class="article-header">
+                <h1>柳韵数兴突击队：用数字技术点亮乡村希望</h1>
+                <div class="article-meta">
+                    <span>发布时间：2025-07-09</span>
+                </div>
+            </div>
+
+            <div class="article-content">
+                <p>广州应用科技学院“柳韵数兴”实践队，是一支积极响应广东青年大学生“百千万工程”突击队行动号召、投身乡村振兴一线的优秀青年队伍。该队伍由广州应用科技学院计算机学院的10名优秀学子组成，于2025年7月从肇庆跨越近1000公里，奔赴湛江市麻章区湖光镇那柳村，开展了为期7天的暑期“三下乡”社会实践活动。队伍以“数字赋能”为核心，旨在用计算机专业力量为古村落注入“数字动能”，探索农文旅融合发展的新路径。</p>
+
+                <img src="images/news19.jpg" alt="柳韵数兴实践队合影" class="article-image">
+                <p class="img-caption">柳韵数兴实践队在那柳村合影</p>
+
+                <p>在文化传承与数字转化方面，“柳韵数兴”实践队深入挖掘那柳村的文化底蕴，特别是针对广东省省级非物质文化遗产——蛤蒌粽的制作技艺展开溯源调研。队员们不仅下地采摘蛤蒌叶、体验传统包粽工艺，还巧妙结合人工智能技术，将蛤蒌粽、猪笼饼等非遗元素转化为折扇、冰箱贴等极具地方特色的文创产品。同时，队伍通过搭建抖音、小红书、微信视频号等多平台的“云端宣传矩阵”，全方位讲述那柳故事，并开发了整合村史脉络与非遗资源的微信小程序，构建起“文化保护-传播-变现”的数字化闭环生态。</p>
+
+                <p>在科技助农与产业赋能方面，实践队充分发挥计算机专业优势，推动那柳村特色产业的价值链重塑。队员们深入700多亩富贵竹种植基地与红树林湿地开展生态调研，分析“订单农业+直供模式”的优势，并利用无人机航拍为“贰拾叁都”文旅项目积累数字化推广素材。通过直播带货，他们带领网友“云逛”红树林、古炮楼，推出“云端认养富贵竹”等服务，有效拓宽了当地农特产品的销售渠道，助力乡村产业升级。</p>
+
+                <p>在民生服务与数字素养提升方面，实践队心系村民，开展了极具针对性的数字技能培训与暖心志愿服务。针对村民，队伍手把手教授微信使用、在线支付等技能，并为低保户家庭精心拍摄、装裱了全家福照片；针对村里的适龄青年，则开展了涵盖人工智能基础概念与简单实践的培训，提升其科技创新能力。此外，队员们还在村内绘制了展现非遗与红树林生态的文化墙绘，并修补破损墙面，让斑驳的墙体变成了“会说话的文化展”。</p>
+
+                <p>作为一支将个人理想融入党和人民事业的新时代青年队伍，“柳韵数兴”实践队以大地为课堂，以数字技术为画笔。他们不仅在那柳村留下了数字基础设施与文创名片，更在走基层、察实情、解难题的生动实践中，诠释了广应科学子的责任与担当，用实际行动为广东县镇村的高质量发展贡献了澎湃的青春力量。</p>
+
+                <div class="article-footer">
+                    <p>图文编辑 | “柳韵数兴”突击队 许詠量</p>
+                    <p>编       发 | 刘嘉盈</p>
+                    <p>初       审 | 徐一</p>
+                    <p>复       审 | 黄枭</p>
+                    <p>终       审 | 郭振</p>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section footer-contact-wrapper">
+                <h4>联系我们</h4>
+                <div class="footer-contact-row">
+                    <div class="footer-contact-col">
+                        <p class="footer-label">地址</p>
+                        <p>广州市增城区朱村街朱村大道东432号</p>
+                        <p>肇庆市鼎湖区莲花镇丰乐路20号</p>
+                    </div>
+                    <div class="footer-contact-col">
+                        <p class="footer-label">联系方式</p>
+                        <p>电话：020-82850018、0758-2630111</p>
+                        <p>招生专线：020-82856988、82856989、0758-2630111（传真）</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>快速链接</h4>
+                <ul>
+                    <li><a href="rural-education.html">乡村支教</a></li>
+                    <li><a href="pairing-help.html">结对帮扶</a></li>
+                    <li><a href="sports.html">十五运会</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>学校简介</h4>
+                <p>广州应用科技学院是经教育部批准设立的全日制普通本科高校。前身是2000年创办的广州大学松田学院，2020年12月转设更名。</p>
+            </div>
+            <div class="footer-section">
+                <h4>友情链接</h4>
+                <ul>
+                    <li><a href="https://www.moe.gov.cn" target="_blank">教育部</a></li>
+                    <li><a href="https://jyt.gd.gov.cn" target="_blank">广东省教育厅</a></li>
+                    <li><a href="https://www.gzasc.edu.cn" target="_blank">学校官网</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 广州应用科技学院计算机学院 版权所有 粤ICP备12345678号-3 粤公网安备12345678765432号</p>
+        </div>
+    </footer>
+
+    <!-- 搜索弹窗 -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-content">
+            <div class="search-header">
+                <h3>搜索结果</h3>
+                <button class="search-close" id="searchClose">&times;</button>
+            </div>
+            <div class="search-results" id="searchResults">
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/fireworks.js"></script>
+    <script src="js/loader.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>

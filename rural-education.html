@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>乡村支教 - 实践网</title>
+    <link rel="icon" type="image/x-icon" href="images/icon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #003264;
+            --primary-light: #0066cc;
+            --secondary-color: #ffc107;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-light: #999;
+            --bg-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: #f5f5f5;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 50, 100, 0.95);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .logo img {
+            height: 52px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.02);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 40px;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 12px 0;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: all 0.35s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links li.active a {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.35s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links li.active a::after {
+            width: 100%;
+        }
+
+        /* 下拉菜单样式 */
+        .nav-links li.has-dropdown {
+            position: relative;
+        }
+
+        .nav-links li.has-dropdown > a::before {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 5px solid currentColor;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links li.has-dropdown:hover > a::before {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .nav-links .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            background: rgba(0, 50, 100, 0.98);
+            min-width: 180px;
+            padding: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .nav-links li.has-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-links .dropdown-menu li {
+            margin: 0;
+            display: block;
+        }
+
+        .nav-links .dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links .dropdown-menu li a:hover {
+            color: var(--secondary-color);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links .dropdown-menu li a::after {
+            display: none;
+        }
+
+        /* 搜索框样式 */
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 5px 5px 5px 15px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .search-container:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .search-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 8px 10px;
+            width: 150px;
+            transition: width 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-input:focus {
+            width: 200px;
+        }
+
+        .search-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* 搜索结果弹窗 */
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .search-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-content {
+            background: #ffffff;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            border-radius: 12px;
+            overflow: hidden;
+            animation: slideIn 0.3s ease;
+        }
+
+        .search-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 25px;
+            border-bottom: 1px solid #e0e0e0;
+            background: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .search-header h3 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .search-close {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+
+        .search-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .search-results {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        .search-item {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.2s ease;
+        }
+
+        .search-item:hover {
+            background: #f5f5f5;
+        }
+
+        .search-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-item a {
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .search-item-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+
+        .search-item-title:hover {
+            text-decoration: underline;
+        }
+
+        .search-item-meta {
+            font-size: 13px;
+            color: var(--text-light);
+            display: flex;
+            gap: 15px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 26px;
+            height: 3px;
+            background: #ffffff;
+            margin: 4px 0;
+        }
+
+        /* 顶部图片背景区域 */
+        .page-header {
+            position: relative;
+            height: 400px;
+            margin-top: 72px;
+            background: url('images/banner1.jpeg') center/cover no-repeat;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 50, 100, 0.6);
+        }
+
+        .header-content {
+            position: absolute;
+            top: 80px;
+            left: 60px;
+            text-align: left;
+            color: #ffffff;
+        }
+
+        .header-content h1 {
+            font-family: 'SimSun', 'STSong', serif;
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 8px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content p {
+            font-family: 'SimSun', 'STSong', serif;
+            font-size: 1.3rem;
+            margin-top: 15px;
+            letter-spacing: 4px;
+            opacity: 0.95;
+        }
+
+        /* 主体内容区域 */
+        .main-content {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        /* 左侧轮播图 */
+        .carousel-section {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .carousel-container {
+            position: relative;
+            height: 400px;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 50, 100, 0.8));
+            color: #ffffff;
+        }
+
+        .carousel-caption h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .carousel-caption p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 25px;
+            right: 20px;
+            display: flex;
+            gap: 18px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 14px;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.35s ease;
+            border: 2px solid transparent;
+            transform: rotate(45deg);
+        }
+
+        .carousel-dot.active {
+            background: #ffffff;
+            transform: rotate(45deg) scale(1.4);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 右侧列表 */
+        .list-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .section-title .latest-badge {
+            background: linear-gradient(135deg, #003264, #001a3c);
+            color: #ffffff;
+            padding: 6px 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-right: 10px;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+        }
+
+        .section-title h2 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .news-list {
+            list-style: none;
+            max-height: 500px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) transparent;
+        }
+        
+        .news-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .news-list::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            gap: 10px;
+        }
+        
+        .pagination-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--primary-color);
+            color: #fff;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-info {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .news-item {
+            padding: 18px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-item:hover {
+            padding-left: 10px;
+            background: rgba(0, 50, 100, 0.03);
+        }
+
+        .news-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .news-title {
+            flex: 1;
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: color 0.3s ease;
+        }
+
+        .news-item:hover .news-title {
+            color: var(--primary-color);
+        }
+
+        .news-date {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-left: 15px;
+            white-space: nowrap;
+        }
+
+        /* 页脚容器 */
+        #footer-container {
+            width: 100%;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .carousel-container {
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 20px;
+                height: 65px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 65px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 50, 100, 0.98);
+                flex-direction: column;
+                padding: 25px;
+            }
+
+            .nav-links li {
+                margin: 12px 0;
+                margin-left: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .page-header {
+                height: 300px;
+                margin-top: 65px;
+            }
+
+            .header-content h1 {
+                font-size: 2rem;
+                letter-spacing: 4px;
+            }
+
+            .header-content p {
+                font-size: 1rem;
+            }
+
+            .carousel-container {
+                height: 280px;
+            }
+        }
+
+        .nav-links.active {
+            display: flex !important;
+        }
+    </style>
+    <link rel="stylesheet" href="css/loader.css">
+</head>
+<body>
+    <!-- 加载动画 -->
+    <div class="loader-wrapper">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <img src="images/logo.png" alt="广州应用科技学院计算机学院">
+            </div>
+            <div class="loader-progress">
+                <div class="loader-progress-bar"></div>
+            </div>
+            <p class="loader-text">正在加载...</p>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="#home"><img src="images/logo.png" alt="广州应用科技学院计算机学院"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li class="active"><a href="rural-education.html">乡村支教</a></li>
+                <li><a href="pairing-help.html">结对帮扶</a></li>
+                <li><a href="sports.html">十五运会</a></li>
+                <li class="has-dropdown">
+                    <a href="#">志愿者队伍</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="volunteer-rural.html">科教先锋实践队</a></li>
+                        <li><a href="volunteer-pairing.html">柳韵数兴突击队</a></li>
+                        <li><a href="volunteer-sports.html">十五运会小海豚</a></li>
+                    </ul>
+                </li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="搜索..." class="search-input">
+                <button id="searchBtn" class="search-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 顶部图片背景区域 -->
+    <header class="page-header">
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <h1>乡村支教</h1>
+            <p>用爱心与知识，点亮乡村孩子的梦想</p>
+        </div>
+    </header>
+
+    <!-- 主体内容 -->
+    <main class="main-content">
+        <!-- 左侧轮播图 -->
+        <div class="carousel-section">
+            <div class="carousel-container">
+                <div class="carousel-slide active">
+                    <img src="images/news02.jpg" alt="教学">
+                    <div class="carousel-caption">
+                        <h3>我带乡里的孩子一起玩无人机</h3>
+                        <p>青春为中国式现代化挺膺担当</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="images/news01.jpeg" alt="暑期社会实践">
+                    <div class="carousel-caption">
+                        <h3>暑期社会实践</h3>
+                        <p>校地共建赋能乡村振兴</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="images/news03.jpeg" alt="三下乡">
+                    <div class="carousel-caption">
+                        <h3>三下乡志愿服务</h3>
+                        <p>赴莲塘小学开展暑期支教</p>
+                    </div>
+                </div>
+                <div class="carousel-dots">
+                    <span class="carousel-dot active"></span>
+                    <span class="carousel-dot"></span>
+                    <span class="carousel-dot"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧列表 -->
+        <div class="list-section">
+            <div class="section-title">
+                <span class="latest-badge">最新</span>
+                <h2>动态</h2>
+            </div>
+            <ul class="news-list">
+                <li class="news-item" data-pdf="pdf/03.20241025.莲塘清韵伴科教，携手共筑乡村梦.pdf">
+                    <a href="https://xiaoyuan.cycnet.com.cn/s?uid=8918445&app_version=1.6.2&sid=1631177&time=1762098570&signature=dDJ5qQLk6jVvNWEzxlO709J0Pf203ORa0BGyPngp83Zm9KYreM&sign=9b5a95db2c56924ac152a99672c8a0d9#" class="news-link">
+                        <span class="news-title">莲塘清韵伴科教，携手共筑乡村梦</span>
+                        <span class="news-date">2024-10-25</span>
+                    </a>
+                </li>
+                <li class="news-item" data-pdf="pdf/02.20240902.莲梦启航：扬帆于莲花盛放的智慧海洋.pdf">
+                    <a href="https://xiaoyuan.cycnet.com.cn/s?uid=8918445&app_version=1.6.2&sid=1625559&time=1762098556&signature=3NRxPz8j0mdBYbOGDW91l30KGf6m9pbayAXV56qwogJEpkLK2e&sign=f8f325fa79b60328650dedb7a43bf74b#" class="news-link">
+                        <span class="news-title">莲梦启航：扬帆于莲花盛放的智慧海洋</span>
+                        <span class="news-date">2024-09-02</span>
+                    </a>
+                </li>
+                <li class="news-item" data-pdf="pdf/01.20240825.青春为中国式现代化挺膺担当丨“我带乡里的孩子一起玩无人机”！.pdf">
+                    <a href="https://mp.weixin.qq.com/s/FP5dLXmCbqiO1e4Wfr6ftg" class="news-link">
+                        <span class="news-title">青春为中国式现代化挺登担当丨“我带乡里的孩子一起玩无人机”！</span>
+                        <span class="news-date">2024-08-25</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="pagination">
+                <button class="pagination-btn" id="prevPage" disabled>上一页</button>
+                <span class="pagination-info" id="pageInfo">第 1 页 / 共 1 页</span>
+                <button class="pagination-btn" id="nextPage" disabled>下一页</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 统一页脚 -->
+    <div id="footer-container"></div>
+
+    <script>
+        // 页面脚本
+        document.addEventListener('DOMContentLoaded', function() {
+            // 汉堡菜单
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // 轮播图
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+            let currentSlide = 0;
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    dots[i].classList.remove('active');
+                });
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                currentSlide = index;
+            }
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => showSlide(index));
+            });
+
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, 5000);
+
+            // 新闻列表点击跳转
+            const newsItems = document.querySelectorAll('.news-item');
+            newsItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const pdfPath = item.getAttribute('data-pdf');
+                    if (pdfPath) {
+                        window.open(encodeURI(pdfPath), '_blank');
+                    }
+                });
+            });
+
+            // 分页功能
+            const newsList = document.querySelector('.news-list');
+            const newsItemList = newsList.querySelectorAll('.news-item');
+            const itemsPerPage = 3;
+            const totalPages = Math.ceil(newsItemList.length / itemsPerPage);
+            let currentPage = 1;
+
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            const pageInfo = document.getElementById('pageInfo');
+
+            function updatePagination() {
+                newsItemList.forEach((item, index) => {
+                    const startIndex = (currentPage - 1) * itemsPerPage;
+                    const endIndex = startIndex + itemsPerPage;
+                    item.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
+                });
+
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === totalPages;
+                pageInfo.textContent = `第 ${currentPage} 页 / 共 ${totalPages} 页`;
+
+                // 重置滚动条位置
+                newsList.scrollTop = 0;
+            }
+
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePagination();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePagination();
+                }
+            });
+
+            // 初始化分页
+            if (totalPages > 1) {
+                updatePagination();
+            }
+
+        });
+    </script>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <style>
+            footer {
+                background: linear-gradient(180deg, #003264 0%, #001a3c 100%);
+                color: #ffffff;
+                padding: 50px 40px 30px;
+            }
+            .footer-container {
+                max-width: 1600px;
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: 3.5fr 0.7fr 1fr 0.9fr;
+                gap: 15px;
+                column-gap: 15px;
+            }
+            .footer-section {
+                padding: 0 15px;
+            }
+            .footer-contact-wrapper {
+                padding-right: 30px;
+            }
+            .footer-contact-row {
+                display: flex;
+                gap: 0;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+            .footer-contact-col {
+                flex: 1;
+                min-width: 0;
+            }
+            .footer-contact-col .footer-label {
+                margin-top: 0;
+            }
+            .footer-section h4 {
+                font-size: 1.1rem;
+                margin-bottom: 20px;
+                color: #ffc107;
+                font-weight: 600;
+                position: relative;
+                padding-bottom: 10px;
+            }
+            .footer-section h4::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 35px;
+                height: 2px;
+                background: #ffc107;
+            }
+            .footer-section p {
+                color: rgba(255, 255, 255, 0.85);
+                font-size: 0.88rem;
+                line-height: 1.7;
+                margin-bottom: 10px;
+            }
+            .footer-section ul {
+                list-style: none;
+                padding: 0;
+            }
+            .footer-section ul li {
+                margin-bottom: 10px;
+                position: relative;
+                padding-left: 18px;
+                display: flex;
+                align-items: center;
+            }
+            .footer-section ul li::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                width: 6px;
+                height: 6px;
+                background: #ffc107;
+                top: 50%;
+                transform: translateY(-50%) rotate(45deg);
+            }
+            .footer-section ul li a {
+                color: rgba(255, 255, 255, 0.85);
+                text-decoration: none;
+                font-size: 0.88rem;
+                transition: all 0.3s ease;
+                display: inline-block;
+            }
+            .footer-section ul li a:hover {
+                color: #ffc107;
+                padding-left: 5px;
+            }
+            .footer-bottom {
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding-top: 25px;
+                margin-top: 40px;
+                text-align: center;
+            }
+            .footer-bottom p {
+                color: rgba(255, 255, 255, 0.6);
+                font-size: 0.82rem;
+                margin-bottom: 8px;
+                letter-spacing: 0.5px;
+            }
+            .footer-bottom p:last-child {
+                margin-bottom: 0;
+            }
+            .footer-label {
+                color: #ffc107;
+                font-size: 0.9rem;
+                font-weight: 500;
+                margin-bottom: 8px;
+                margin-top: 15px;
+            }
+            @media (max-width: 1024px) {
+                .footer-container {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 25px;
+                }
+            }
+            @media (max-width: 768px) {
+                footer {
+                    padding: 40px 20px 25px;
+                }
+                .footer-container {
+                    grid-template-columns: 1fr;
+                    gap: 25px;
+                }
+                .footer-section {
+                    padding: 0;
+                    text-align: center;
+                }
+                .footer-section h4::after {
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+                .footer-section ul li {
+                    padding-left: 0;
+                }
+                .footer-contact-row {
+                    flex-direction: column;
+                    gap: 15px;
+                }
+                .footer-contact-wrapper {
+                    padding-right: 15px;
+                }
+                .footer-section ul li::before {
+                    display: none;
+                }
+            }
+        </style>
+        <div class="footer-container">
+            <div class="footer-section footer-contact-wrapper">
+                <h4>联系我们</h4>
+                <div class="footer-contact-row">
+                    <div class="footer-contact-col">
+                        <p class="footer-label">地址</p>
+                        <p>广州市增城区朱村街朱村大道东432号</p>
+                        <p>肇庆市鼎湖区莲花镇丰乐路20号</p>
+                    </div>
+                    <div class="footer-contact-col">
+                        <p class="footer-label">联系方式</p>
+                        <p>电话：020-82850018、0758-2630111</p>
+                        <p>招生专线：020-82856988、82856989、0758-2630111（传真）</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>快速链接</h4>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="pairing-help.html">结对帮扶</a></li>
+                    <li><a href="sports.html">十五运会</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>学校简介</h4>
+                <p>广州应用科技学院是经教育部批准设立的全日制普通本科高校。前身是2000年创办的广州大学松田学院，2020年12月转设更名。</p>
+            </div>
+            <div class="footer-section">
+                <h4>友情链接</h4>
+                <ul>
+                    <li><a href="https://www.moe.gov.cn" target="_blank">教育部</a></li>
+                    <li><a href="https://jyt.gd.gov.cn" target="_blank">广东省教育厅</a></li>
+                    <li><a href="https://www.gzasc.edu.cn" target="_blank">学校官网</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 广州应用科技学院计算机学院 版权所有 粤ICP备12345678号-3 粤公网安备12345678765432号</p>
+        </div>
+    </footer>
+
+    <!-- 搜索弹窗 -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-content">
+            <div class="search-header">
+                <h3>搜索结果</h3>
+                <button class="search-close" id="searchClose">&times;</button>
+            </div>
+            <div class="search-results" id="searchResults">
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/fireworks.js"></script>
+    <script src="js/loader.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/rural-education.js"></script>
+</body>
+</html>
