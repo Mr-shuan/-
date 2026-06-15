@@ -1,0 +1,227 @@
+/* 页面加载动画 */
+.loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #003264 0%, #001a3c 100%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.loader-wrapper.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* 加载内容容器 - 居中显示 */
+.loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Logo波浪式动画 */
+.loader-logo {
+    position: relative;
+    animation: loaderFloat 2s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader-logo img {
+    height: 80px;
+    filter: brightness(0) invert(1);
+    /* 波浪式渐显效果 - 从透明到全部显示 */
+    opacity: 0;
+    animation: waveReveal 1.5s ease-out forwards;
+}
+
+@keyframes waveReveal {
+    0% {
+        opacity: 0;
+        filter: brightness(0) invert(1) blur(10px);
+        transform: scale(0.9);
+    }
+    50% {
+        opacity: 0.5;
+        filter: brightness(0) invert(1) blur(5px);
+    }
+    100% {
+        opacity: 1;
+        filter: brightness(0) invert(1) blur(0);
+        transform: scale(1);
+    }
+}
+
+@keyframes loaderFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* 加载进度条 */
+.loader-progress {
+    width: 200px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.loader-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ffc107, #ffca28);
+    border-radius: 3px;
+    animation: progressFill 1.8s ease-out forwards;
+}
+
+@keyframes progressFill {
+    0% { width: 0%; }
+    30% { width: 30%; }
+    60% { width: 70%; }
+    100% { width: 100%; }
+}
+
+/* 加载文字 */
+.loader-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    margin-top: 15px;
+    font-family: 'Microsoft YaHei', sans-serif;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out 0.3s forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 内容渐入动画 */
+.page-content {
+    animation: contentFadeIn 0.8s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+@keyframes contentFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 导航栏渐入 */
+.navbar {
+    animation: navFadeIn 0.6s ease-out forwards;
+    animation-delay: 0.3s;
+}
+
+@keyframes navFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 轮播图渐入 */
+.hero, .carousel-container {
+    animation: heroFadeIn 0.8s ease-out forwards;
+    animation-delay: 0.4s;
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 各区块渐入动画 */
+section.fade-in-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+section.fade-in-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 卡片交错动画 */
+.card, .service-card, .news-item {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.card.visible, .service-card.visible, .news-item.visible {
+    animation: cardFadeIn 0.5s ease-out forwards;
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 滚动触发动画 */
+.fade-in-on-scroll {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 页脚渐入 */
+footer {
+    animation: footerFadeIn 0.8s ease-out forwards;
+    animation-delay: 0.8s;
+}
+
+@keyframes footerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

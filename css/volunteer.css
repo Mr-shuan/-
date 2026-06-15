@@ -1,0 +1,20 @@
+.page-header {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #004a8c 100%);
+    color: var(--white);
+    text-align: center;
+    margin-top: 72px;
+}
+
+.page-header-content h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.page-header-content p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
